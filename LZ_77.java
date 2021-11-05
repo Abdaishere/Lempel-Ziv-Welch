@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class LZ_77 implements LZ {
+public class LZ_77 {
     ArrayList<Integer> P;
     ArrayList<Integer> L;
     ArrayList<Character> S;
@@ -15,13 +15,55 @@ public class LZ_77 implements LZ {
     }
 
     public void decompression() {
-        /// write code here
-        System.out.printf("LZ_77 decomp");
+        String exp = new String();
+        for (int i = 0; i < P.size(); i++) {
+            if ((P.get(i) == 0 & L.get(i) == 0)) {
+                exp += S.get(i);
+            } else {
+                int pointerTag = P.get(i);
+                int lengthTag = L.get(i);
+                Character charTag = S.get(i);
+                String substr;
+                substr = exp.substring(exp.length() - pointerTag, exp.length() - pointerTag + lengthTag);
+                exp += substr;
+
+                if (charTag != '0') {
+                    exp += charTag;
+                }
+            }
+        }
+        System.out.println(exp);
     }
 
     public void compression() {
-        /// write code here
-        System.out.printf("LZ_77 comp");
+        boolean flag;
+        String sub_str, sub_str2;
+        int startidx;
+        for (int i = 0; i < input.length(); ++i) {// i -> start index of sub_str
+            startidx = i;
+            for (int j = i + 1; j <= input.length(); ++j) {// j -> end index of sub_str
+                sub_str = input.substring(i, j);
+                flag = false;
+                for (int k = i - sub_str.length(); k >= 0; --k) {// k -> start index of sub2
+                    sub_str2 = input.substring(k, k + sub_str.length());
+                    if (sub_str.equals(sub_str2)) {
+                        flag = true;
+                        startidx = k;
+                        break;
+                    }
+                }
+                if (!flag) {
+                    this.addTag(i - startidx, sub_str.length() - 1, input.charAt(i + sub_str.length() - 1));
+                    i += sub_str.length() - 1;
+                    break;
+                } else if (j == input.length()) {
+                    this.addTag(i - startidx, sub_str.length(), (char) '0');
+                    i += sub_str.length() - 1;
+                    break;
+                }
+            }
+
+        }
     }
 
     private void addTag(Integer P, Integer L, Character S) {
@@ -31,17 +73,26 @@ public class LZ_77 implements LZ {
     }
 
     public void readTags() {
-        System.out.printf("input number of tages for LZ 77 decompression: ");
+        System.out.println("tag<P,L,S> = P L S");
+        System.out.print("input number of tages for LZ 77 decompression: ");
         Scanner input = new Scanner(System.in);
         Integer size = input.nextInt();
         for (int i = 0; i < size; i++) {
-            System.out.print("P = ");
             Integer P = input.nextInt();
-            System.out.print("L = ");
             Integer L = input.nextInt();
-            System.out.print("S = ");
             Character S = input.next().charAt(0);
             addTag(P, L, S);
+        }
+    }
+
+    public void showTags() {
+        Integer size = P.size();
+        System.out.println(size);
+
+        for (int i = 0; i < size; i++) {
+            System.out.print(P.get(i) + " ");
+            System.out.print(L.get(i) + " ");
+            System.out.println(S.get(i));
         }
     }
 
@@ -59,17 +110,21 @@ public class LZ_77 implements LZ {
                                         
                     1. compression
                     2. decompression
+                    3. Exist
                     """);
             int val = input.nextInt();
             switch (val) {
                 case 1 -> {
                     LZ.readInput();
                     LZ.compression();
+                    LZ.showTags();
                 }
                 case 2 -> {
                     LZ.readTags();
                     LZ.decompression();
+                    LZ.compression();
                 }
+                case 3 -> {return;}
                 default -> throw new IllegalStateException("Unexpected value: " + val);
             }
 

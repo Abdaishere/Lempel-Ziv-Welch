@@ -24,6 +24,10 @@ public class LZW implements LZ {
         this.N.add(N);
     }
 
+    public void showTags(){
+
+    }
+
     public void readTags() {
         System.out.printf("input number of tages for LZW decompression: ");
         Scanner input = new Scanner(System.in);
@@ -49,6 +53,7 @@ public class LZW implements LZ {
                     
                     1. compression
                     2. decompression
+                    3. Exist
                     """);
             int val = input.nextInt();
             switch (val) {
@@ -60,6 +65,7 @@ public class LZW implements LZ {
                     LZ.readTags();
                     LZ.decompression();
                 }
+                case 3 -> {return;}
                 default -> throw new IllegalStateException("Unexpected value: " + val);
             }
         }

@@ -27,6 +27,10 @@ public class LZ_78 implements LZ {
         this.S.add(S);
     }
 
+    public void showTags() {
+
+    }
+
     public void readTags() {
         System.out.printf("input number of tages for LZ 78 decompression: ");
         Scanner input = new Scanner(System.in);
@@ -54,6 +58,7 @@ public class LZ_78 implements LZ {
                                         
                     1. compression
                     2. decompression
+                    3. Exist
                     """);
             int val = input.nextInt();
             switch (val) {
@@ -65,6 +70,7 @@ public class LZ_78 implements LZ {
                     LZ.readTags();
                     LZ.decompression();
                 }
+                case 3 -> {return;}
                 default -> throw new IllegalStateException("Unexpected value: " + val);
             }
 

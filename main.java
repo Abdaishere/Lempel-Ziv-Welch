@@ -14,7 +14,7 @@ public class main {
                     """);
             int val = input.nextInt();
             switch (val){
-                case 1-> {}
+                case 1-> LZ_77.main(new String[]{});
                 case 2-> LZ_78.main(new String[]{});
                 case 3-> LZW.main(new String[]{});
                 default -> throw new IllegalStateException("Unexpected value: " + val);
