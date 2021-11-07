@@ -73,6 +73,9 @@ public class LZ_77 {
     }
 
     public void readTags() {
+        P.clear();
+        L.clear();
+        S.clear();
         System.out.println("tag<P,L,S> = P L S");
         System.out.print("input number of tages for LZ 77 decompression: ");
         Scanner input = new Scanner(System.in);
@@ -124,7 +127,9 @@ public class LZ_77 {
                     LZ.decompression();
                     LZ.compression();
                 }
-                case 3 -> {return;}
+                case 3 -> {
+                    return;
+                }
                 default -> throw new IllegalStateException("Unexpected value: " + val);
             }
 

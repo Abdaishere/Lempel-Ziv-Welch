@@ -13,13 +13,52 @@ public class LZ_78 implements LZ {
     }
 
     public void decompression() {
-        /// write code here
-        System.out.printf("LZ_78 decomp");
+        ArrayList<String> dictionary = new ArrayList<String>();
+        dictionary.add("");
+        int length = N.size();
+        String tmp = new String();
+        for (int i = 0; i < length; i++) {
+            String dic = dictionary.get(N.get(i));
+            char s = S.get(i);
+            if (s != '0') {
+                dic += s;
+            }
+            tmp += dic;
+            dictionary.add(dic);
+        }
+//        System.out.println(input + ' ' + tmp);
+//        System.out.println(input.equals(tmp));
+        input = tmp;
     }
 
     public void compression() {
-        /// write code here
-        System.out.printf("LZ_78 comp");
+        ArrayList<String> dictionary = new ArrayList<String>();
+        dictionary.add("");
+        int length = input.length();
+        String T = "";
+        for (int i = 0; i < length; i++) {
+            char S = input.charAt(i);
+            if (dictionary.contains(T + S)) {
+                T += S;
+            } else {
+                addTag(dictionary.indexOf(T), S);
+                dictionary.add(T + S);
+                T = "";
+            }
+        }
+        // last element
+        if (!T.equals("")) {
+            char S = '0';
+            if (dictionary.contains(T + S)) {
+                T += S;
+            } else {
+                addTag(dictionary.indexOf(T), S);
+                dictionary.add(T + S);
+                T = "";
+            }
+        }
+        System.out.println(dictionary);
+        showTags();
     }
 
     private void addTag(Integer N, Character S) {
@@ -28,17 +67,23 @@ public class LZ_78 implements LZ {
     }
 
     public void showTags() {
+        Integer size = N.size();
+        System.out.println(size);
 
+        for (int i = 0; i < size; i++) {
+            System.out.print(N.get(i) + " ");
+            System.out.println(S.get(i));
+        }
     }
 
     public void readTags() {
+        N.clear();
+        S.clear();
         System.out.printf("input number of tages for LZ 78 decompression: ");
         Scanner input = new Scanner(System.in);
         Integer size = input.nextInt();
         for (int i = 0; i < size; i++) {
-            System.out.print("N = ");
             Integer N = input.nextInt();
-            System.out.print("S = ");
             Character S = input.next().charAt(0);
             addTag(N, S);
         }
@@ -52,8 +97,8 @@ public class LZ_78 implements LZ {
 
     public static void main(String[] arg) {
         Scanner input = new Scanner(System.in);
+        LZ_78 LZ = new LZ_78();
         while (true) {
-            LZ_78 LZ = new LZ_78();
             System.out.printf("""
                                         
                     1. compression
@@ -70,7 +115,9 @@ public class LZ_78 implements LZ {
                     LZ.readTags();
                     LZ.decompression();
                 }
-                case 3 -> {return;}
+                case 3 -> {
+                    return;
+                }
                 default -> throw new IllegalStateException("Unexpected value: " + val);
             }
 
