@@ -16,17 +16,18 @@ public class LZW implements LZ {
             dictionary.add(String.valueOf((char) i));
         }
         int length = N.size();
-        String T = dictionary.get(N.get(0)), str = T;
+        int k = N.get(0);
+        String str = dictionary.get(k), w = str;
         for (int i = 1; i < length; i++) {
-            int N = this.N.get(i);
-            if (dictionary.size() <= N) {
-                dictionary.add(T + T.charAt(0));
-                str += T + T.charAt(0);
-            } else {
-                dictionary.add(T + dictionary.get(N));
-                str += dictionary.get(N);
-            }
-            T = dictionary.get(N);
+            k = this.N.get(i);
+            String tmp;
+            if (k >= dictionary.size()) {
+                tmp = w + w.charAt(0);
+            } else
+                tmp = dictionary.get(k);
+            str += tmp;
+            dictionary.add(w + tmp.charAt(0));
+            w = tmp;
         }
         System.out.println(str);
         System.out.println(str.equals(input));
@@ -67,6 +68,7 @@ public class LZW implements LZ {
     }
 
     public void readTags() {
+        N.clear();
         System.out.printf("input number of tages for LZW decompression: ");
         Scanner input = new Scanner(System.in);
         Integer size = input.nextInt();
