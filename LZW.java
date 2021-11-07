@@ -6,18 +6,19 @@ public class LZW implements LZ {
     String input;
 
     public LZW() {
-        N = new ArrayList<Integer>();
-        input = new String();
+        N = new ArrayList<>();
+        input = "";
     }
 
     public void decompression() {
-        ArrayList<String> dictionary = new ArrayList<String>();
+        ArrayList<String> dictionary = new ArrayList<>();
         for (int i = 0; i < 256; i++) {
             dictionary.add(String.valueOf((char) i));
         }
         int length = N.size();
         int k = N.get(0);
-        String str = dictionary.get(k), w = str;
+        StringBuilder str = new StringBuilder(dictionary.get(k));
+        String w = str.toString();
         for (int i = 1; i < length; i++) {
             k = this.N.get(i);
             String tmp;
@@ -25,16 +26,16 @@ public class LZW implements LZ {
                 tmp = w + w.charAt(0);
             } else
                 tmp = dictionary.get(k);
-            str += tmp;
+            str.append(tmp);
             dictionary.add(w + tmp.charAt(0));
             w = tmp;
         }
         System.out.println(str);
-        System.out.println(str.equals(input));
+        System.out.println(str.toString().equals(input));
     }
 
     public void compression() {
-        ArrayList<String> dictionary = new ArrayList<String>();
+        ArrayList<String> dictionary = new ArrayList<>();
         for (int i = 0; i < 256; i++) {
             dictionary.add(String.valueOf((char) i));
         }
@@ -62,16 +63,16 @@ public class LZW implements LZ {
         Integer size = N.size();
         System.out.println(size);
 
-        for (int i = 0; i < size; i++) {
-            System.out.println(N.get(i));
+        for (Integer integer : N) {
+            System.out.println(integer);
         }
     }
 
     public void readTags() {
         N.clear();
-        System.out.printf("input number of tages for LZW decompression: ");
+        System.out.print("input number of tages for LZW decompression: ");
         Scanner input = new Scanner(System.in);
-        Integer size = input.nextInt();
+        int size = input.nextInt();
         for (int i = 0; i < size; i++) {
             Integer N = input.nextInt();
             addTag(N);
@@ -79,7 +80,7 @@ public class LZW implements LZ {
     }
 
     public void readInput() {
-        System.out.printf("input string for LZW compression: ");
+        System.out.print("input string for LZW compression: ");
         Scanner input = new Scanner(System.in);
         this.input = input.nextLine();
     }
@@ -88,7 +89,7 @@ public class LZW implements LZ {
         Scanner input = new Scanner(System.in);
         LZW LZ = new LZW();
         while (true) {
-            System.out.printf("""
+            System.out.print("""
                                         
                     1. compression
                     2. decompression

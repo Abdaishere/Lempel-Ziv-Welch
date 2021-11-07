@@ -7,16 +7,16 @@ public class LZ_78 implements LZ {
     String input;
 
     public LZ_78() {
-        N = new ArrayList<Integer>();
-        S = new ArrayList<Character>();
-        input = new String();
+        N = new ArrayList<>();
+        S = new ArrayList<>();
+        input = "";
     }
 
     public void decompression() {
-        ArrayList<String> dictionary = new ArrayList<String>();
+        ArrayList<String> dictionary = new ArrayList<>();
         dictionary.add("");
         int length = N.size();
-        String tmp = new String();
+        String tmp = "";
         for (int i = 0; i < length; i++) {
             String dic = dictionary.get(N.get(i));
             char s = S.get(i);
@@ -26,13 +26,13 @@ public class LZ_78 implements LZ {
             tmp += dic;
             dictionary.add(dic);
         }
-//        System.out.println(input + ' ' + tmp);
-//        System.out.println(input.equals(tmp));
+        System.out.println(input + ' ' + tmp);
+        System.out.println(input.equals(tmp));
         input = tmp;
     }
 
     public void compression() {
-        ArrayList<String> dictionary = new ArrayList<String>();
+        ArrayList<String> dictionary = new ArrayList<>();
         dictionary.add("");
         int length = input.length();
         String T = "";
@@ -54,7 +54,6 @@ public class LZ_78 implements LZ {
             } else {
                 addTag(dictionary.indexOf(T), S);
                 dictionary.add(T + S);
-                T = "";
             }
         }
         System.out.println(dictionary);
