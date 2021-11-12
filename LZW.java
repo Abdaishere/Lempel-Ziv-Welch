@@ -31,7 +31,6 @@ public class LZW implements LZ {
             w = tmp;
         }
         System.out.println(str);
-        System.out.println(str.toString().equals(input));
     }
 
     public void compression() {

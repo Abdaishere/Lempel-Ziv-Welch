@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class LZ_77 {
+public class LZ_77 implements LZ{
     ArrayList<Integer> P;
     ArrayList<Integer> L;
     ArrayList<Character> S;
@@ -15,24 +15,25 @@ public class LZ_77 {
     }
 
     public void decompression() {
-        String exp = new String();
+        String tmp = new String();
         for (int i = 0; i < P.size(); i++) {
             if ((P.get(i) == 0 & L.get(i) == 0)) {
-                exp += S.get(i);
+                tmp += S.get(i);
             } else {
                 int pointerTag = P.get(i);
                 int lengthTag = L.get(i);
                 Character charTag = S.get(i);
                 String substr;
-                substr = exp.substring(exp.length() - pointerTag, exp.length() - pointerTag + lengthTag);
-                exp += substr;
+                substr = tmp.substring(tmp.length() - pointerTag, tmp.length() - pointerTag + lengthTag);
+                tmp += substr;
 
                 if (charTag != '0') {
-                    exp += charTag;
+                    tmp += charTag;
                 }
             }
         }
-        System.out.println(exp);
+        System.out.println(tmp);
+        input = tmp;
     }
 
     public void compression() {
@@ -64,6 +65,7 @@ public class LZ_77 {
             }
 
         }
+        showTags();
     }
 
     private void addTag(Integer P, Integer L, Character S) {
@@ -120,12 +122,10 @@ public class LZ_77 {
                 case 1 -> {
                     LZ.readInput();
                     LZ.compression();
-                    LZ.showTags();
                 }
                 case 2 -> {
                     LZ.readTags();
                     LZ.decompression();
-                    LZ.compression();
                 }
                 case 3 -> {
                     return;

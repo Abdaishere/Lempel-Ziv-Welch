@@ -26,8 +26,7 @@ public class LZ_78 implements LZ {
             tmp += dic;
             dictionary.add(dic);
         }
-        System.out.println(input + ' ' + tmp);
-        System.out.println(input.equals(tmp));
+        System.out.println(tmp);
         input = tmp;
     }
 
@@ -56,7 +55,6 @@ public class LZ_78 implements LZ {
                 dictionary.add(T + S);
             }
         }
-        System.out.println(dictionary);
         showTags();
     }
 
